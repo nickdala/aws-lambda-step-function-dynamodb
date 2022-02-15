@@ -40,7 +40,7 @@ func HandleRequest(ctx context.Context, myEvent MyEvent) (string, error) {
 	initialStateAsString := string(initialStateAsBytes)
 	log.Printf("This is initial state %s\n", initialStateAsString)
 
-	cfg, err := config.LoadDefaultConfig(context.TODO())
+	cfg, err := config.LoadDefaultConfig(ctx)
 	if err != nil {
 		panic("unable to load SDK config, " + err.Error())
 	}

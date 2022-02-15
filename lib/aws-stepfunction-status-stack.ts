@@ -46,7 +46,7 @@ export class AwsStepfunctionStatusStack extends Stack {
       resultPath: sfn.JsonPath.DISCARD
     });
 
-    const waitX = new sfn.Wait(this, 'Wait X Seconds', {
+    const waitX = new sfn.Wait(this, 'Execute long running task...wait 30 seconds', {
       time: sfn.WaitTime.duration(Duration.seconds(30)),
     });
 
@@ -82,6 +82,7 @@ export class AwsStepfunctionStatusStack extends Stack {
       environment: {
         StateMachineArn: stateMachine.stateMachineArn
       },
+      functionName: 'InvokeTaskStepFunction'
     });
 
     stateMachine.grantStartExecution(invokeStepFunction)
