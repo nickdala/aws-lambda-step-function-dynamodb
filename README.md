@@ -65,7 +65,7 @@ The lambda function is written in Go and is responsible for starting the executi
 }
 ```
 
-When the function is invoked, the Lambda runs the handler method. The handle method prepares the following json to be passed as the inital state to the step function.
+When the function is invoked, the Lambda runs the handler method. The handler method prepares the following json to be passed as the inital state to the step function.
 
 ```json
 {
@@ -76,7 +76,7 @@ When the function is invoked, the Lambda runs the handler method. The handle met
 
 ### Invoking the lambda function
 
-In order to invoke the lambda function, navigate to the console and navigate to the `Test` tab.
+In order to invoke the lambda function, navigate to the console and click the `Test` tab.
 
 ![test-lambda](./images/test-lambda.png)
 
@@ -88,27 +88,26 @@ Add the following json in the `Test Event` panel and then click the `Test` butto
 }
 ```
 
-Next, expand the `Execution result` details panel.  You will see the output of the log message in the lambda function.
+Next, expand the `Execution result` details panel.  You should see the output of the log messages in the lambda function.
 
 ![lambda-logs](./images/lambda-logs.png)
 
 The state machine will go through the following states.
 
-#### Create Dynamo Task Item
+1. Create Dynamo Task Item
 
-In this tast, the dynamodb item is created in the `Tasks` table.
+ * In this tast, the dynamodb item is created in the `Tasks` table.
 
 ![step-function-started](./images/step-function-started.png)
 
 ![dynamodb-task-started](./images/dynamodb-task-started.png)
 
-#### Execute long running task...wait 30 seconds
+2. Execute long running task...wait 30 seconds
+* In this task, we simulate a long running task by waiting 30 seconds.  The `Tasks` table is not updated at this time.
 
-In this task, we simulate a long running task by waiting 30 seconds.  The `Tasks` table is not updated at this time.
+3. Update Dynamo Task Item
 
-#### Update Dynamo Task Item
-
-The task is complete, and we mark set the Status to `Done`.
+* The task is complete, and we mark set the Status to `Done`.
 
 ![step-function-ended](./images/step-function-ended.png)
 
