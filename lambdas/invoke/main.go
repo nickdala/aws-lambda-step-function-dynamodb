@@ -13,7 +13,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/sfn"
 )
 
-type MyEvent struct {
+type TaskEvent struct {
 	TaskId string `json:"taskId"`
 }
 
@@ -22,7 +22,7 @@ type StepFunctionInput struct {
 	Timestamp int64  `json:"timestamp"`
 }
 
-func HandleRequest(ctx context.Context, myEvent MyEvent) (string, error) {
+func HandleRequest(ctx context.Context, myEvent TaskEvent) (string, error) {
 	taskId := myEvent.TaskId
 	log.Printf("Task ID: %s", taskId)
 
