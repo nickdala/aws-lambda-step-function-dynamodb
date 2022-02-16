@@ -96,7 +96,7 @@ The state machine will go through the following states.
 
 1. Create Dynamo Task Item
 
- * In this tast, the dynamodb item is created in the `Tasks` table.
+ * In this task, the DynamoDB item is created in the `Tasks` table.
 
 ![step-function-started](./images/step-function-started.png)
 
@@ -107,7 +107,7 @@ The state machine will go through the following states.
 
 3. Update Dynamo Task Item
 
-* The task is complete, and we mark set the Status to `Done`.
+* The task is now complete.  The last step is to set the Status to `Done` for the **Breakfast**.
 
 ![step-function-ended](./images/step-function-ended.png)
 
