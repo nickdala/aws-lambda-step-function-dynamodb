@@ -2,9 +2,29 @@
 
 Example project of an AWS Lambda triggering the execution of a Step Function.  The Step Function contains tasks that insert and update items in the DynammDB table `Tasks`.  The AWS resources are deployed using the [AWS CDK](https://aws.amazon.com/cdk).  The main stack is defined in the file [aws-stepfunction-status-stack.ts](./lib/aws-stepfunction-status-stack.ts).
 
+## Build & Deploy
+
+Install npm modules
+
+```sh
+npm install
+```
+
+Compile typescript to js
+
+```sh
+npm run build
+```
+
+Deploy this stack to your default AWS account/region
+
+```sh
+cdk deploy
+```
+
 ## DynamoDB
 
-The following code in 
+The following code in [aws-stepfunction-status-stack.ts](./lib/aws-stepfunction-status-stack.ts) defines the DynamoDB `Tasks` table.
 
 ```typescript
 const dynamoTable = new Table(this, 'Tasks', {
@@ -54,17 +74,63 @@ When the function is invoked, the Lambda runs the handler method. The handle met
 }
 ```
 
-acomposed of a taskId has a primary key is a blank project for TypeScript development with CDK.
+### Invoking the lambda function
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+In order to invoke the lambda function, navigate to the console and navigate to the `Test` tab.
+
+![test-lambda](./images/test-lambda.png)
+
+Add the following json in the `Test Event` panel and then click the `Test` button.
+
+```json
+{
+  "taskId": "Breakfast"
+}
+```
+
+Next, expand the `Execution result` details panel.  You will see the output of the log message in the lambda function.
+
+![lambda-logs](./images/lambda-logs.png)
+
+The state machine will go through the following states.
+
+#### Create Dynamo Task Item
+
+In this tast, the dynamodb item is created in the `Tasks` table.
+
+![step-function-started](./images/step-function-started.png)
+
+![dynamodb-task-started](./images/dynamodb-task-started.png)
+
+#### Execute long running task...wait 30 seconds
+
+In this task, we simulate a long running task by waiting 30 seconds.  The `Tasks` table is not updated at this time.
+
+#### Update Dynamo Task Item
+
+The task is complete, and we mark set the Status to `Done`.
+
+![step-function-ended](./images/step-function-ended.png)
+
+![dynamodb-task-done](./images/dynamodb-task-done.png)
 
 
+## Useful Links
+<https://docs.aws.amazon.com/step-functions/latest/dg/concepts-states.html>
 
-## Useful commands
+<https://docs.aws.amazon.com/step-functions/latest/dg/connect-ddb.html>
 
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
+<https://docs.aws.amazon.com/lambda/latest/dg/lambda-golang.html>
+
+<https://docs.aws.amazon.com/step-functions/latest/dg/concepts-invoke-sfn.html>
+
+<https://pkg.go.dev/github.com/aws/aws-sdk-go-v2/service/sfn>
+
+<https://github.com/aws/aws-sdk-go-v2/tree/main/service/sfn>
+
+<https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.UpdateExpressions.html>
+
+<https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html>
+
+<https://docs.aws.amazon.com/step-functions/latest/dg/amazon-states-language-intrinsic-functions.html>
+
