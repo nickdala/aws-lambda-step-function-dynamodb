@@ -57,7 +57,7 @@ When assembled together in [aws-stepfunction-status-stack.ts](./lib/aws-stepfunc
 
 ## Lambda
 
-The lambda function is written in Go and is responsible for starting the execution of the step function.  The Lambda function handler will process events with the following json structure.
+The lambda function is written in Go and is responsible for starting the execution of the step function (see [main.go](./lambdas/invoke/main.go)).  The Lambda function handler will process events with the following json structure.
 
 ```json
 {
