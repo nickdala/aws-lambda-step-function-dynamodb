@@ -34,7 +34,6 @@ export class AwsStepfunctionStatusStack extends Stack {
     const logStartTask = new tasks.DynamoPutItem(this, 'CreateDynamoTaskItem', {
       item: {
         taskId: tasks.DynamoAttributeValue.fromString(sfn.JsonPath.stringAt('$.taskId')),
-        //timestamp: tasks.DynamoAttributeValue.numberFromString(sfn.JsonPath.stringAt('$.timestamp')),
         // Can't use fromNumber - see https://github.com/aws/aws-cdk/issues/12456
         // timestamp: tasks.DynamoAttributeValue.fromNumber(sfn.JsonPath.numberAt('$.timestamp')),
         timestamp: tasks.DynamoAttributeValue.numberFromString(
@@ -53,7 +52,6 @@ export class AwsStepfunctionStatusStack extends Stack {
     const logEndTask = new tasks.DynamoUpdateItem(this, 'UpdateDynamoTaskItem', {
       key: {
         taskId: tasks.DynamoAttributeValue.fromString(sfn.JsonPath.stringAt('$.taskId')),
-        //timestamp: tasks.DynamoAttributeValue.numberFromString(sfn.JsonPath.stringAt('$.timestamp')),
         // Can't use fromNumber - see https://github.com/aws/aws-cdk/issues/12456
         // timestamp: tasks.DynamoAttributeValue.fromNumber(sfn.JsonPath.numberAt('$.timestamp')),
         timestamp: tasks.DynamoAttributeValue.numberFromString(
